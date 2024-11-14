@@ -1,0 +1,38 @@
+<div class="min-h-screen flex justify-center items-center bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 ">
+    <div class="bg-gradient-to-r from-black via-gray-800 to-gray-500  text-white shadow-lg rounded-lg p-8 max-w-lg w-full">
+      <h2 class="text-3xl font-semibold mb-6">Task Details</h2>
+  
+      <div class="mb-4">
+        <p class="text-lg">Task ID: 
+          <span class="font-semibold">{{ taskId }}</span>
+        </p>
+      </div>
+  
+      <div class="mb-4">
+        <p class="text-lg">Task Description: 
+          <span class="font-medium">{{ description }}</span>
+        </p>
+      </div>
+  
+      <div class="mb-4">
+        <p class="text-lg">Task Status: 
+          <span 
+            [class.text-green-500]="status" 
+            [class.text-yellow-500]="!status" 
+            class="font-semibold py-1 px-3 rounded-full 
+              [class.bg-green-100]='status' 
+              [class.bg-yellow-100]='!status'">
+            {{ status == false ? 'Pending' : 'Completed' }}
+          </span>
+        </p>
+      </div>
+  
+      <div class="mt-6 text-center">
+        <button 
+          class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none">
+          Edit Task
+        </button>
+      </div>
+    </div>
+  </div>
+  
