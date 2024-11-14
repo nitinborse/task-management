@@ -16,4 +16,12 @@ export class ServiceService {
   getTaskByIdData(id: number): Observable<any> {
     return this.httpClient.get(`https://jsonplaceholder.typicode.com/todos/${id}`);
   }
+
+  updateTaskData(task: any) {
+    return this.httpClient.put(`https://jsonplaceholder.typicode.com/todos/${task.id}`, task);
+  }
+
+  deleteTaskData(taskId: number): Observable<any> {
+    return this.httpClient.delete(`https://jsonplaceholder.typicode.com/todos/${taskId}`);
+  }
 }

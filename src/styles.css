@@ -2,3 +2,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Override ngx-toastr default styles */
+/* Positioning and size */
+.toast-container {
+  @apply  top-5 right-5 z-50 w-[300px] h-[200px];
+}
+
+/* Success, error, info, and warning styles */
+.toast-success {
+  @apply bg-green-500 text-white rounded-lg p-4 shadow-md;
+}
+
+.toast-error {
+  @apply bg-red-500 text-white rounded-lg p-4 shadow-md;
+}
+
+.toast-info {
+  @apply bg-blue-500 text-white rounded-lg p-4 shadow-md;
+}
+
+.toast-warning {
+  @apply bg-yellow-500 text-white rounded-lg p-4 shadow-md;
+}
+
+/* Text styling */
+.toast-title {
+  @apply font-semibold text-lg;
+}
+
+.toast-message {
+  @apply text-sm;
+}

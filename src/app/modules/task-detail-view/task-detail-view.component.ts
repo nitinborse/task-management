@@ -35,10 +35,8 @@ export class TaskDetailViewComponent implements OnInit {
       );
     }
   }
-  viewTask(id : any){
-
+  viewTask(){
+    this.router.navigate([`/tasks/${this.taskId}/edit`]);
   }
-  deleteTask(id: any){}
-
   
 }

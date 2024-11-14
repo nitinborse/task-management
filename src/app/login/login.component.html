@@ -15,7 +15,7 @@
             class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <div *ngIf="username?.invalid && username?.touched" class="text-red-500 text-sm">
-            <div *ngIf="username?.hasError('required')">Please enter User ID.</div>
+            <div *ngIf="username?.hasError('required')">Please enter User Name.</div>
           </div>
         </div>
   
@@ -29,7 +29,6 @@
           />
           <div *ngIf="password?.invalid && password?.touched" class="text-red-500 text-sm">
             <div *ngIf="password?.hasError('required')">Please enter Password.</div>
-            <div *ngIf="password?.hasError('minlength')">Password must be at least 4 characters long.</div>
           </div>
         </div>
   

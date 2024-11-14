@@ -1,37 +1,58 @@
-<!-- task-list.component.html -->
+<!-- Search Form -->
+<div class="flex justify-between items-center mb-4">
+  <form [formGroup]="searchForm" (ngSubmit)="searchTasks()">
+    <div class="flex space-x-4 mx-auto p-2">
+      <input 
+        type="text" 
+        formControlName="searchId" 
+        placeholder="Search by Task ID" 
+        class="px-4 py-2 border rounded-md"
+      />
+      <select formControlName="searchStatus" class="px-4 py-2 border rounded-md">
+        <option value="">Select Status</option>
+        <option value="Completed">Completed</option>
+        <option value="Pending">Pending</option>
+      </select>
 
-<div class="container mx-auto p-6">
-    <!-- Table for tasks -->
-    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
-      <table class="min-w-full table-auto">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Task ID</th>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Title</th>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Status</th>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Loop through tasks (assuming tasks is an array) -->
-          <tr *ngFor="let task of getTaskInList" class="border-t">
-            <td class="px-6 py-4 text-sm text-gray-700">{{ task.id }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ task.title }}</td>
-
-            <td class="px-6 py-4 text-sm text-gray-700">
-                <span [ngClass]="task.completed ? 'text-green-600 font-semibold' : 'text-yellow-500 font-semibold'">
-                    {{ task.completed == true ? "Completed" : "Pending" }} </span></td>
-            <td class="px-6 py-4 text-sm">
-              <!-- Action Button to go to the task details page -->
-              <button 
-                (click)="viewTask(task.id)" 
-                class="text-blue-500 hover:text-blue-700 focus:outline-none">
-                View Task
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <button type="submit" class="px-6 py-2 border bg-blue-500 text-white rounded-md hover:bg-blue-600">
+        Search
+      </button>
     </div>
+    
+  </form>
+</div>
+
+<!-- Table for tasks -->
+<div class="container mx-auto p-6">
+  <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Task ID</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Title</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Status</th>
+          <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of filteredTasks" class="border-t">
+          <td class="px-6 py-4 text-sm text-gray-700">{{ task.id }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ task.title }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">
+            <span [ngClass]="task.completed ? 'text-green-600 font-semibold' : 'text-yellow-500 font-semibold'">
+              {{ task.completed ? "Completed" : "Pending" }}
+            </span>
+          </td>
+          <td class="px-6 py-4 text-sm flex space-x-4">
+            <button (click)="viewTask(task.id)" class="p-2 text-blue-500 hover:text-blue-700 focus:outline-none">
+              <img src="./assets/mdi--edit-outline (1).svg" alt="Edit" class="h-5 w-5" />
+            </button>
+            <button (click)="confirmDelete(task.id)" class="p-2 text-red-500 hover:text-red-700 focus:outline-none">
+              <img src="./assets/weui--delete-filled.svg" alt="Delete" class="h-5 w-5" />
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
+</div>

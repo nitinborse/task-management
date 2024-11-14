@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastService } from '../toast-service.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private route: Router
+    private route: Router,
+    private toastService: ToastService
   ) {
     // Initialize the login form with validation
     this.loginForm = this.fb.group({
@@ -29,11 +31,11 @@ export class LoginComponent implements OnInit {
     // Basic validation check for empty fields
     if (this.loginForm.invalid) {
       if (this.username?.hasError('required')) {
-        alert('Please enter User ID');
+        // alert('Please enter User ID');
       } else if (this.password?.hasError('required')) {
-        alert('Please enter Password');
+        // alert('Please enter Password');
       } else if (this.password?.hasError('minlength')) {
-        alert('Password must be at least 4 characters');
+        // alert('Password must be at least 4 characters');
       }
       return;
     }
@@ -42,10 +44,13 @@ export class LoginComponent implements OnInit {
 
     // Simulate login credentials validation
     if (username === 'admin' && password === '1234') {
-      alert('Login successful!');
+      this.toastService.showSuccess('Login successful!', 'Success');
+      localStorage.setItem('userName', 'Nitin');
+
       this.route.navigate(['/tasks']);  // Navigate to tasks page on success
     } else {
-      alert('Invalid username or password');
+      this.toastService.showError('Invalid username or password!', 'Wrong Credentials');
+
     }
   }
 
