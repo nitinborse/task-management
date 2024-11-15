@@ -12,6 +12,7 @@ export class TaskDetailViewComponent implements OnInit {
   getTask: any;
   description: any;
   status: any;
+  userId: any;
 
   constructor(private route: ActivatedRoute , private router: Router, private service: ServiceService) {}
 
@@ -24,6 +25,7 @@ export class TaskDetailViewComponent implements OnInit {
         (data) => {
           this.getTask = data;
           this.description = this.getTask.title
+          this.userId = this.getTask.userId
           this.status = this.getTask.completed
 
           console.log(this.getTask)
@@ -33,10 +35,10 @@ export class TaskDetailViewComponent implements OnInit {
           console.error('Error fetching task data:', error);
         }
       );
-    }
+  }
   }
   viewTask(){
-    this.router.navigate([`/tasks/${this.taskId}/edit`]);
+    this.router.navigate([`/task/${this.taskId}/edit`]);
   }
   
 }

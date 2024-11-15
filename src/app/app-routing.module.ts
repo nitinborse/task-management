@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'tasks', component: TaskListViewComponent  , canActivate: [authGuard] },
   { path: 'task/:id', component: TaskDetailViewComponent , canActivate: [authGuard] },
-  { path: 'tasks/:id/edit', component: EditTaskComponent , canActivate: [authGuard]},
+  { path: 'task/:id/edit', component: EditTaskComponent , canActivate: [authGuard]},
 
   
 ];

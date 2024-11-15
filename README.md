@@ -27,6 +27,8 @@ This is a task management application built with Angular 16. It provides a user-
 
 ## Setup Instructions
 
+## Clone Repository nitin_task Branch 
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/nitinborse/task-management.git
@@ -54,6 +56,7 @@ This is a task management application built with Angular 16. It provides a user-
 
 - **Task List View (`/tasks`)**: 
   - Displays all tasks in a table.
+  - Added Search/Filter 
   - Tasks can be deleted using the delete icon button.
 
 - **Task Detail View (`/tasks/:id`)**:
@@ -64,7 +67,7 @@ This is a task management application built with Angular 16. It provides a user-
 
 - **Header Component**:
   - Displays logged-in user details.
-  - Provides a logout button to log out from the app.
+  - Provides a logout button to log out from the app when clicked on Profile.
 
 ## Toaster Messages
 

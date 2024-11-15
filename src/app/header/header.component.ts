@@ -32,4 +32,8 @@ export class HeaderComponent {
     localStorage.removeItem('userName'); // Remove the username from localStorage
     this.router.navigate(['/login']); // Navigate to the login page
   }
+  home(){
+    this.router.navigate(['/tasks']); // Navigate to the login page
+
+  }
 }

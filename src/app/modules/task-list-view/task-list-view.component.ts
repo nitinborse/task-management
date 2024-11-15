@@ -10,29 +10,30 @@ import { ToastService } from 'src/app/toast-service.service';
   styleUrls: ['./task-list-view.component.css']
 })
 export class TaskListViewComponent implements OnInit {
+  taskForm: FormGroup;
   getTaskInList: any = [];
   filteredTasks: any = [];
-  searchForm!: FormGroup;
   showDeleteModal: boolean = false;
   taskIdToDelete: number | null = null;
 
   constructor(
-    private router: Router, 
-    private service: ServiceService, 
+    private router: Router,
+    private service: ServiceService,
     private toastService: ToastService,
     private fb: FormBuilder
-  ) { }
-
-  ngOnInit(): void {
-    this.createSearchForm();
-    this.getAllData();
-  }
-
-  // Initialize the search form with form controls
-  createSearchForm() {
-    this.searchForm = this.fb.group({
+  ) {
+    this.taskForm = this.fb.group({
       searchId: [''],
       searchStatus: ['']
+    });
+  }
+
+  ngOnInit(): void {
+    this.getAllData();
+
+    // Watch for form changes to update results dynamically
+    this.taskForm.valueChanges.subscribe(() => {
+      this.searchTasks();
     });
   }
 
@@ -40,12 +41,28 @@ export class TaskListViewComponent implements OnInit {
     this.service.getAllTasksData().subscribe(
       (response: any) => {
         this.getTaskInList = response;
-        this.filteredTasks = this.getTaskInList; // Initialize with all tasks
+        this.filteredTasks = this.getTaskInList;
       },
       (error) => {
         console.error(error);
       }
     );
+  }
+
+  searchTasks() {
+    const { searchId, searchStatus } = this.taskForm.value;
+
+    if (!searchId && !searchStatus) {
+      // If no filters are applied, call the API to get all data
+      this.getAllData();
+    } else {
+      // Filter tasks based on search criteria without calling the API
+      this.filteredTasks = this.getTaskInList.filter((task: any) => {
+        const matchesId = searchId ? task.id.toString().includes(searchId) : true;
+        const matchesStatus = searchStatus ? (task.completed ? 'Completed' : 'Pending') === searchStatus : true;
+        return matchesId && matchesStatus;
+      });
+    }
   }
 
   viewTask(taskId: number): void {
@@ -69,23 +86,16 @@ export class TaskListViewComponent implements OnInit {
           this.getTaskInList = this.getTaskInList.filter((task: { id: number | null; }) => task.id !== this.taskIdToDelete);
           this.closeModal();
           this.toastService.showInfo('Task Deleted!', 'Info');
+          this.getAllData();
+          this.taskForm.reset();
+
+
         },
         (error) => {
-          // console.error('Error deleting task:', error);
-          this.toastService.showError('Error deleting task!', 'error');
+          console.error('Error deleting task:', error);
+          this.toastService.showError('Error deleting task!', 'Error');
         }
       );
     }
-  }
-
-  searchTasks() {
-    const searchValues = this.searchForm.value;
-
-    // Filter tasks based on Task ID and Status
-    this.filteredTasks = this.getTaskInList.filter((task: any) => {
-      const matchesId = searchValues.searchId ? task.id.toString().includes(searchValues.searchId) : true;
-      const matchesStatus = searchValues.searchStatus ? (task.completed ? 'Completed' : 'Pending') === searchValues.searchStatus : true;
-      return matchesId && matchesStatus;
-    });
   }
 }
